@@ -108,10 +108,13 @@ export default class ParticleGenerator implements IParticleGenerator {
 
     // Maintain the population
     this.particles.forEach((p, i) => {
+      // Decrease the opacity as the particles get lower on the screen
+      p.opacity = 1 - Math.max(0, Math.min(1, p.y / canvas.height))
+
       // Update each particle's position
       p.update()
       // Prune the off-canvas particles
-      if(p.y > canvas.height || p.y < -100 || p.x > canvas.width + 100 || p.x < -100) {
+      if(p.y > canvas.height || p.y < this.y - 100 || p.x > canvas.width + 100 || p.x < this.x - 100) {
         if(recycle && activeCount <= numberOfPieces) {
           // Replace the particle with a brand new one
           this.particles[i] = this.getParticle()

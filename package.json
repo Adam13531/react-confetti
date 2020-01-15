@@ -35,7 +35,7 @@
     "prebuild": "yarn clean",
     "watch": "webpack --watch",
     "test": "tsc; yarn run lint",
-    "clean": "git clean -xfd dist/",
+    "clean": "echo I removed this 🧹",
     "cleanall": "git clean -xfd .",
     "lint": "eslint . --ext .js --ext .ts --ext .tsx",
     "prepare": "yarn run lint && yarn run build",

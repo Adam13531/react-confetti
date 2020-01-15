@@ -21,6 +21,10 @@ export default class Particle {
       initialVelocityY,
     } = this.getOptions()
     this.context = context
+
+    // This is for the ParticleGenerator itself to control so that we can change
+    // the opacity based on how far down the screen we are.
+    this.opacity = 1
     this.x = x
     this.y = y
     this.w = randomRange(5, 20)
@@ -28,7 +32,9 @@ export default class Particle {
     this.radius = randomRange(5, 10)
     this.vx = randomRange(-initialVelocityX, initialVelocityX)
     this.vy = randomRange(-initialVelocityY, 0)
-    this.shape = randomInt(0, 2)
+
+    // I just want circles or squares, not strips
+    this.shape = randomInt(0, 1)
     this.angle = degreesToRads(randomRange(0, 360))
     this.angularSpin = randomRange(-0.2, 0.2)
     this.color = colors[Math.floor(Math.random() * colors.length)]
@@ -39,6 +45,8 @@ export default class Particle {
   context: CanvasRenderingContext2D
 
   radius: number
+
+  opacity: number
 
   x: number
 
@@ -99,7 +107,7 @@ export default class Particle {
     this.context.beginPath()
     this.context.fillStyle = this.color
     this.context.strokeStyle = this.color
-    this.context.globalAlpha = opacity
+    this.context.globalAlpha = opacity * this.opacity
     this.context.lineCap = 'round'
     this.context.lineWidth = 2
     if(drawShape && typeof drawShape === 'function') {
